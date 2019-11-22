@@ -1,5 +1,10 @@
 # Universal Analytics for Python
 
+[![Build Status](https://travis-ci.com/dmvass/universal-analytics-python3.svg?branch=master)](https://travis-ci.com/dmvass/universal-analytics-python3)
+[![image](https://img.shields.io/pypi/v/universal-analytics-python3.svg)](https://pypi.python.org/pypi/universal-analytics-python3)
+[![codecov](https://codecov.io/gh/dmvass/universal-analytics-python3/branch/master/graph/badge.svg)](https://codecov.io/gh/dmvass/universal-analytics-python3)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/dmvass/universal-analytics-python3/blob/master/LICENSE)
+
 It's a fork of [universal-analytics-python](https://github.com/adswerve/universal-analytics-python)
 whith support for Python 3, batch requests, synchronous and asynchronous API calls.
 
