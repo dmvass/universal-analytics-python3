@@ -108,6 +108,6 @@ setuptools.setup(
     keywords=["python", "analytics", "google-analytics"],
     install_requires=["httpx>=0.7.7"],
     setup_requires=["pytest-runner", "flake8"],
-    tests_require=["pytest", "pytest-asyncio", "asynctest"],
+    tests_require=["coverage", "pytest", "pytest-asyncio", "asynctest"],
     cmdclass={"release": ReleaseCommand}
 )
