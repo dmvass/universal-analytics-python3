@@ -38,11 +38,11 @@ A simple example for synchronous usage:
 from universal_analytics import Tracker, HTTPRequest, HTTPBatchRequest
 
 with HTTPRequest() as http:
-    tracker = Tracker.create("UA-XXXXX-Y", http, client_id="unique-id")
+    tracker = Tracker("UA-XXXXX-Y", http, client_id="unique-id")
     tracker.send("event", "Subscription", "billing")
 
 with HTTPBatchRequest() as http:
-    tracker = Tracker.create("UA-XXXXX-Y", http, client_id="unique-id")
+    tracker = Tracker("UA-XXXXX-Y", http, client_id="unique-id")
     tracker.send("event", "Subscription", "billing")
 ```
 
@@ -54,11 +54,11 @@ from universal_analytics import Tracker, AsyncHTTPRequest, AsyncHTTPBatchRequest
 
 async def main():
     async with AsyncHTTPRequest() as http:
-        tracker = Tracker.create("UA-XXXXX-Y", http, client_id="unique-id")
+        tracker = Tracker("UA-XXXXX-Y", http, client_id="unique-id")
         await tracker.send("event", "Subscription", "billing")
 
     async with AsyncHTTPBatchRequest() as http:
-        tracker = Tracker.create("UA-XXXXX-Y", http, client_id="unique-id")
+        tracker = Tracker("UA-XXXXX-Y", http, client_id="unique-id")
         await tracker.send("event", "Subscription", "billing")
 
 loop = asyncio.get_event_loop()
