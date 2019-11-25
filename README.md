@@ -46,7 +46,7 @@ with HTTPBatchRequest() as http:
     tracker.send("event", "Subscription", "billing")
 ```
 
-A simple example for synchronous usage:
+A simple example for asynchronous usage:
 
 ```python
 import asyncio
