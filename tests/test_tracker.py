@@ -16,7 +16,7 @@ class TestTracker:
         self.mocked_http = mock.Mock()
         self.account = "UA-XXXXX-Y"
         self.cid = str(uuid.uuid4())
-        self.tracker = tracker.Tracker("UA-XXXXX-Y", self.mocked_http)
+        self.tracker = tracker.Tracker("UA-XXXXX-Y", self.mocked_http, self.cid)
 
     @mock.patch("universal_analytics.tracker.generate_uuid")
     def test_init_default(self, mocked_generate_uuid):
@@ -55,38 +55,42 @@ class TestTracker:
         assert self.tracker.params["cs"] == "test-source"
 
     def test_send_pageview(self):
-        # Send a pageview
         self.tracker.send("pageview", "/test")
-        self.mocked_http.send.called_with({"t": "pageview",
-                                           "dp": "/test",
-                                           "v": 1,
-                                           "tid": self.account,
-                                           "cid": self.cid})
+        self.mocked_http.send.assert_called_with({
+            "t": "pageview",
+            "dp": "/test",
+            "v": 1,
+            "tid": self.account,
+            "cid": self.cid,
+        })
 
     def test_send_interactive_event(self):
-        # Send an event
         self.tracker.send("event", "mycat", "myact", "mylbl",
                           {"noninteraction": 1, "page": "/1"})
-        self.mocked_http.send.called_with({"t": "event",
-                                           "ec": "mycat",
-                                           "ea": "myact",
-                                           "el": "mylbl",
-                                           "ni": 1,
-                                           "dp": "/1",
-                                           "v": 1,
-                                           "tid": self.account,
-                                           "cid": self.cid})
+        self.mocked_http.send.assert_called_with({
+            "t": "event",
+            "ec": "mycat",
+            "ea": "myact",
+            "el": "mylbl",
+            "ni": 1,
+            "dp": "/1",
+            "v": 1,
+            "tid": self.account,
+            "cid": self.cid,
+        })
 
     def test_send_social_hit(self):
         # Send a social hit
         self.tracker.send("social", "facebook", "share", "/test#social")
-        self.mocked_http.send.called_with({"t": "social",
-                                           "sn": "facebook",
-                                           "sa": "share",
-                                           "st": "/test#social",
-                                           "v": 1,
-                                           "tid": self.account,
-                                           "cid": self.cid})
+        self.mocked_http.send.assert_called_with({
+            "t": "social",
+            "sn": "facebook",
+            "sa": "share",
+            "st": "/test#social",
+            "v": 1,
+            "tid": self.account,
+            "cid": self.cid,
+        })
 
     def test_send_item(self):
         self.tracker.send("item", {
@@ -96,16 +100,18 @@ class TestTracker:
             "itemCategory": "hawaiian",
             "itemQuantity": 1
         }, hitage=7200)
-        self.mocked_http.send.called_with({"t": "item",
-                                           "qt": 7200000,
-                                           "ti": "12345abc",
-                                           "in": "pizza",
-                                           "ic": "abc",
-                                           "iv": "hawaiian",
-                                           "iq": 1.0,
-                                           "v": 1,
-                                           "tid": self.account,
-                                           "cid": self.cid})
+        self.mocked_http.send.assert_called_with({
+            "t": "item",
+            "qt": 7200000,
+            "ti": "12345abc",
+            "in": "pizza",
+            "ic": "abc",
+            "iv": "hawaiian",
+            "iq": 1.0,
+            "v": 1,
+            "tid": self.account,
+            "cid": self.cid,
+        })
 
     def test_send_transaction(self):
         self.tracker.send("transaction", {
@@ -116,17 +122,45 @@ class TestTracker:
             "transactionShipping": 0.45,
             "transactionCurrency": "USD"
         }, hitage=7200)
-        self.mocked_http.send.called_with({"t": "transaction",
-                                           "qt": 7200000,
-                                           "ti": "12345abc",
-                                           "ta": "phone order",
-                                           "tr": 28.00,
-                                           "tt": 3.00,
-                                           "ts": 0.45,
-                                           "cu": "USD",
-                                           "v": 1,
-                                           "tid": self.account,
-                                           "cid": self.cid})
+        self.mocked_http.send.assert_called_with({
+            "t": "transaction",
+            "qt": 7200000,
+            "ti": "12345abc",
+            "ta": "phone order",
+            "tr": 28.00,
+            "tt": 3.00,
+            "ts": 0.45,
+            "cu": "USD",
+            "v": 1,
+            "tid": self.account,
+            "cid": self.cid,
+        })
+
+    def test_send_experimental(self):
+        experiment_value = "$experimentId.$variationId"
+        self.tracker.set("exp", experiment_value)
+        self.tracker.send("pageview", "/test")
+        self.mocked_http.send.assert_called_with({
+            "t": "pageview",
+            "dp": "/test",
+            "exp": experiment_value,
+            "v": 1,
+            "tid": self.account,
+            "cid": self.cid,
+        })
+
+    def test_send_experimental_with_alias(self):
+        experiment_value = "$experimentId.$variationId"
+        self.tracker.set("experiment", experiment_value)
+        self.tracker.send("pageview", "/test")
+        self.mocked_http.send.assert_called_with({
+            "t": "pageview",
+            "dp": "/test",
+            "exp": experiment_value,
+            "v": 1,
+            "tid": self.account,
+            "cid": self.cid,
+        })
 
     @pytest.mark.asyncio
     async def test_send_with_async_request(self):
