@@ -394,6 +394,9 @@ Tracker.alias(safe_unicode,
               "exDescription")
 Tracker.alias(int, "exf", "exception-fatal", "exceptionFatal", "exFatal")
 
+# Experiments
+Tracker.alias(safe_unicode, "exp", "experiment")
+
 # User Timing
 Tracker.alias(safe_unicode, "utc", "timingCategory", "timing-category")
 Tracker.alias(safe_unicode, "utv", "timingVariable", "timing-variable")

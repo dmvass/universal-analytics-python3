@@ -12,6 +12,7 @@ dist
 
 # Environment
 .venv*
+venv
 
 # Testing
 .tox
