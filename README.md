@@ -96,6 +96,16 @@ tracker.send("pageview", path="/test", title="Test page")
 tracker.send("pageview", {"path": "/test", "title": "Test page"})
 ```
 
+Server-side experiments:
+
+```python
+# Set the experiment ID and variation ID
+tracker.set("exp", "$experimentId.$variationId")
+
+# Send a pageview hit to Google Analytics
+tracker.send("pageview", path="/test", title="Test page")
+```
+
 ## License
 
 This code is distributed under the terms of the MIT license.
