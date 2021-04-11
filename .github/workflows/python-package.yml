@@ -42,3 +42,4 @@ jobs:
     - name: Test with coverage
       run: |
         coverage run setup.py test
+        codecov
