@@ -42,4 +42,7 @@ jobs:
     - name: Test with coverage
       run: |
         coverage run setup.py test
+    - name: Upload code coverage
+      run: |
         codecov
+      if: ${{ matrix.python-version == '3.9' }}
