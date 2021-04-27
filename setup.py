@@ -107,7 +107,7 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     keywords=["python", "analytics", "google-analytics"],
-    install_requires=["httpx>=0.7.7"],
+    install_requires=["httpx>=0.10.0"],
     setup_requires=["pytest-runner", "flake8"],
     tests_require=["coverage", "pytest", "pytest-asyncio", "asynctest"],
     cmdclass={"release": ReleaseCommand}

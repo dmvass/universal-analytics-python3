@@ -165,7 +165,7 @@ class TestTracker:
     @pytest.mark.asyncio
     async def test_send_with_async_request(self):
         session = mock.Mock(post=asynctest.CoroutineMock(),
-                            close=asynctest.CoroutineMock())
+                            aclose=asynctest.CoroutineMock())
         async with AsyncHTTPRequest(session=session) as http:
             t = tracker.Tracker("UA-XXXXX-Y", http)
             await t.send("pageview", "/test")
