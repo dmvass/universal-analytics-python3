@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [1.1.1] - 2021-04-28
 - Updated the supported version of httpx
 - Changed the close behaviour of AsyncHTTPRequest to use `aclose()` rather than `close()` as per 
 (https://www.python-httpx.org/async/#opening-and-closing-clients) 
