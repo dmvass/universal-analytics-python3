@@ -61,7 +61,7 @@ class TestAsyncHTTPRequest:
     @pytest.fixture
     def session(self):
         return mock.Mock(post=asynctest.CoroutineMock(),
-                         close=asynctest.CoroutineMock())
+                         aclose=asynctest.CoroutineMock())
 
     @pytest.mark.asyncio
     async def test_http_request(self, session):
@@ -76,7 +76,7 @@ class TestAsyncHTTPRequest:
     async def test_http_request_close_session(self, session):
         async with requests.AsyncHTTPRequest(session=session):
             pass
-        session.close.assert_called()
+        session.aclose.assert_called()
 
     @pytest.mark.asyncio
     async def test_http_batch_request(self, session):
@@ -108,5 +108,5 @@ class TestAsyncHTTPRequest:
         http._send = mocked__send
         await http.close()
 
-        session.close.assert_called()
+        session.aclose.assert_called()
         mocked__send.assert_called()

@@ -127,7 +127,7 @@ class AsyncHTTPRequest(BaseHTTPRequest):
         await self.session.post(self.endpoint, data=payload)
 
     async def close(self):
-        await self.session.close()
+        await self.session.aclose()
 
 
 class AsyncHTTPBatchRequest(AsyncHTTPRequest):
